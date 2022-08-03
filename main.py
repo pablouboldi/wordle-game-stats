@@ -111,9 +111,9 @@ print(data.tail())
 
 is_on = True
 
-user_input = int(input('\nIngrese la opción deseada: AGREGAR (1) / MOSTRAR GRÁFICO (2) / EDITAR (3) / SALIR (4)\n'))
-
 while is_on:
+
+    user_input = int(input('\nIngrese la opción deseada: AGREGAR (1) / MOSTRAR GRÁFICO (2) / EDITAR (3) / SALIR (4)\n'))
 
     if user_input == 1:
 
@@ -124,9 +124,6 @@ while is_on:
     elif user_input == 2:
 
         plot(data)
-
-        user_input = int(input('\nIngrese la opción deseada: '
-                               'AGREGAR (1) / MOSTRAR GRÁFICO (2) / EDITAR (3) / SALIR (4)\n'))
 
     # elif user_input == 3:
     #
@@ -139,8 +136,7 @@ while is_on:
         is_on = False
 
     else:
-        user_input = int(input('\nEsa no es una opción posible. Ingrese una correcta: '
-                               'AGREGAR (1) / MOSTRAR GRÁFICO (2) / EDITAR (3) / SALIR (4)\n'))
+        print('\nEsa no es una opción posible. Intente de nuevo.')
 
 # TODO 1: Incluir alguna manera de buscar palabras existentes
 # TODO 2: Incluir alguna manera de editar filas

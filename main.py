@@ -105,6 +105,28 @@ def plot(df):
     plt.show()
 
 
+def edit(df, num):
+
+    print(df.loc[df['Numero'] == num])
+
+    value = int(input('\nIngrese el dato que desea editar: Numero (1) / Fecha (2) / Pablo (3) / Jorge (4) / Andres (5)\n'))
+
+    if value == 1:
+        to_replace = df.loc[df['Numero'] == num, 'Numero'].values[0]
+        new_value = int(input('\nIngrese el nuevo valor:\n'))
+        df.replace(to_replace=to_replace, value=new_value, inplace=True)
+        print(df.tail())
+
+    elif value == 2:
+        to_replace = df.loc[df['Numero'] == num, 'Fecha'].values[0]
+        new_value = input('\nIngrese la nueva fecha:\n')
+        df.replace(to_replace=to_replace, value=new_value, inplace=True)
+        print(df.tail())
+
+    df.to_csv('wordle_stats.csv', encoding='latin1')
+    return
+
+
 data = pd.read_csv('wordle_stats.csv', encoding='latin1', parse_dates=['Fecha'], index_col=[0])
 
 print(data.tail())
@@ -113,7 +135,7 @@ is_on = True
 
 while is_on:
 
-    user_input = int(input('\nIngrese la opción deseada: AGREGAR (1) / MOSTRAR GRÁFICO (2) / EDITAR (3) / SALIR (4)\n'))
+    user_input = int(input('\nIngrese la opción deseada: AGREGAR (1) / MOSTRAR GRÁFICO (2) / EDITAR (3) / BUSCAR (4) / SALIR (5)\n'))
 
     if user_input == 1:
 
@@ -125,18 +147,31 @@ while is_on:
 
         plot(data)
 
-    # elif user_input == 3:
-    #
-    #     edit(data)
+    elif user_input == 3:
+
+        wordle_num = input("\nIngrese el numero de wordle que desea editar:\n")
+
+        if data['Numero'].astype(str).str.contains(wordle_num).any():
+            edit(data, int(wordle_num))
+        else:
+            print(f'Ese numero de wordle no existe')
 
     elif user_input == 4:
 
-        print('\nChaucito!\n')
+        palabra = input("\nIngrese la palabra que desea buscar:\n")
+
+        if data['Palabra'].str.contains(palabra, case=False).any():
+            print(f'La palabra {palabra.upper()} ya fue utilizada')
+        else:
+            print(f'La palabra {palabra.upper()} no fue utilizada')
+
+    elif user_input == 5:
+
+        print('\nChaucito!')
 
         is_on = False
 
     else:
         print('\nEsa no es una opción posible. Intente de nuevo.')
 
-# TODO 1: Incluir alguna manera de buscar palabras existentes
-# TODO 2: Incluir alguna manera de editar filas
+# TODO 1: Incluir alguna manera de editar filas
